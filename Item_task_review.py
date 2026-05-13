@@ -27,8 +27,21 @@ df["task_id"] = df["task_id"].astype(str)
 
 rater_id = st.text_input("Enter your rater ID")
 
+if not rater_id:
+    st.warning("Please enter your rater ID to begin.")
+    st.stop()
+
+rater_id = rater_id.strip()
+
 # Create a unique review ID
-df["review_id"] = df["rater_id"] + "_" + df["item_id"] + "_" + df["task_id"]
+df["item_id"] = df["item_id"].astype(str)
+df["task_id"] = df["task_id"].astype(str)
+
+df["review_id"] = (
+    rater_id + "_" +
+    df["item_id"] + "_" +
+    df["task_id"]
+)
 
 # -----------------------------
 # Load existing reviews
@@ -120,21 +133,15 @@ if st.button("Submit review", key="submit_review"):
         st.stop()
 
     new_row = pd.DataFrame([{
-        "timestamp": datetime.now().isoformat(timespec="seconds"),
-        "review_id": row["review_id"],
-        "item_id": row["item_id"],
-        "task_id": row["task_id"],
-        "task_statement": row["task_statement"],
-        "stem": row["stem"],
-        "option_a": row.get("option_a", ""),
-        "option_b": row.get("option_b", ""),
-        "option_c": row.get("option_c", ""),
-        "option_d": row.get("option_d", ""),
-        "correct_answer": row.get("correct_answer", ""),
-        "content_match": content_match,
-        "item_quality": item_quality,
-        "suggested_edits": suggested_edits
-    }])
+    "timestamp": datetime.now().isoformat(timespec="seconds"),
+    "rater_id": rater_id,
+    "review_id": row["review_id"],
+    "item_id": row["item_id"],
+    "task_id": row["task_id"],
+    "content_match": content_match,
+    "item_quality": item_quality,
+    "suggested_edits": suggested_edits
+}])
 
     if OUTPUT_FILE.exists():
         new_row.to_csv(OUTPUT_FILE, mode="a", header=False, index=False)
