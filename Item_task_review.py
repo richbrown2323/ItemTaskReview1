@@ -25,8 +25,10 @@ df = pd.read_csv(INPUT_FILE)
 df["item_id"] = df["item_id"].astype(str)
 df["task_id"] = df["task_id"].astype(str)
 
+rater_id = st.text_input("Enter your rater ID")
+
 # Create a unique review ID
-df["review_id"] = df["item_id"] + "_" + df["task_id"]
+df["review_id"] = df["rater_id"] + "_" + df["item_id"] + "_" + df["task_id"]
 
 # -----------------------------
 # Load existing reviews
