@@ -14,7 +14,7 @@ OUTPUT_FILE = APP_DIR / "item_task_review_results.csv"
 # -----------------------------
 # Page setup
 # -----------------------------
-st.title("Item–Task Statement Review")
+st.title("SME Item Review")
 
 # -----------------------------
 # Load input data
