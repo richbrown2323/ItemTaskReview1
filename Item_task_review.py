@@ -25,10 +25,10 @@ df = pd.read_csv(INPUT_FILE)
 df["item_id"] = df["item_id"].astype(str)
 df["task_id"] = df["task_id"].astype(str)
 
-rater_id = st.text_input("Enter your name")
+rater_id = st.text_input("Enter your Rater ID")
 
 if not rater_id:
-    st.warning("Please enter your name to begin.")
+    st.warning("Please enter your Rater ID to begin.")
     st.stop()
 
 rater_id = rater_id.strip()
